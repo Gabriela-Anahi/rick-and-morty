@@ -1,142 +1,183 @@
-const $ = (query) => document.querySelector(query)
-const $$ = (query) => document.querySelectorAll(query)
+// basic functions and utilities
 
-const BASE_URL = 'https://rickandmortyapi.com/api'
+  const $ = (query) => document.querySelector(query)
+  const $$ = (query) => document.querySelectorAll(query)
 
-let currentPage = 1
-let totalPages = 1
+  const BASE_URL = 'https://rickandmortyapi.com/api'
 
-const fetchURL = async (url) => {
-  const response = await fetch(url)
-  const data = await response.json()
-  return data
-}
 
-const getApiURL = () => {
-  const searchInput = $('#search-input')
-  let url = `${BASE_URL}/episode/?page=${currentPage}`
+  let urlapi = 'https://rickandmortyapi.com/api/${tipo}/?page=${currentPage}'
+  let tipo = "character"
+  let searchinput= ""
+  let currentPage = 1
+  let totalPages = 1
 
-  if (searchInput.value.trim()) {
-    url += `&name=${searchInput.value.trim()}`
+//fetching
+  async function getApiInfo() {
+    try{
+      const urlapi= 'https://rickandmortyapi.com/api/character/?page=1'
+      const response = await fetch(urlapi)
+      const data = await response.json()
+      datos =  data.data.results
+      console.log("hasta aqui funciono")
+      renderCharacter()
+    }catch (error) {
+      console.log(error);
+    }
+
   }
 
-  return url
-}
 
-const clearResults = () => {
-  const resultsContainer = $('.results')
-  resultsContainer.innerHTML = ''
-}
 
-const updateResultsCount = (count) => {
-  $('.results-number').innerHTML = count
-}
 
-const updateResultsTitle = (title) => {
-  $('.results-title').innerHTML = title
-}
+  // const fetchURL = async (url) => {
+  //   const response = await fetch(url)
+  //   const data = await response.json()
+  //   return data
+  // }
 
-const resetPage = () => {
-  currentPage = 1
-}
+// //const getApiURL = () => {
+// const searchInput = $('#search-input')
+//   let url = `${BASE_URL}/${tipo}/?page=${currentPage}`
 
-const hideLoader = () => {
-  $('.loader-container').classList.add('hidden')
-}
+//   if (searchInput.value.trim()) {
+//     url += `&name=${searchInput.value.trim()}`
+//   }
 
-const showLoader = () => {
-  $('.loader-container').classList.remove('hidden')
-}
+//   return url
+// }
 
-const fetchCharacters = async () => {
-  showLoader()
-  const data = await fetchURL(getApiURL())
+// const clearResults = () => {
+//   const resultsContainer = $('.results')
+//   resultsContainer.innerHTML = ''
+// }
 
-  const { results, info } = data
+// const updateResultsCount = (count) => {
+//   $('.results-number').innerHTML = count
+// }
 
-  totalPages = info.pages
-  clearResults()
-  appendCharacters(results)
-  updateResultsCount(info.count)
-  updatePagination()
-  hideLoader()
-}
 
-const appendCharacters = (characters) => {
-  if (!characters || characters.length === 0) {
-    $('.results').innerHTML =
-      '<h2 class="no-results">No se han encontrado resultados</h2>'
-    return
-  }
 
-  for (const character of characters) {
-    const characterCard = document.createElement('div')
-    characterCard.classList.add('character')
+// const resetPage = () => {
+//   currentPage = 1
+// }
 
-    characterCard.innerHTML = `
+// const hideLoader = () => {
+//   $('.loader-container').classList.add('hidden')
+// }
+
+// const showLoader = () => {
+//   $('.loader-container').classList.remove('hidden')
+// }
+
+// const fetchCharacters = async () => {
+//   showLoader()
+//   const data = await fetchURL(getApiURL())
+
+//   const { results, info } = data
+
+//   totalPages = info.pages
+//   clearResults()
+//   appendCharacters(results)
+//   updateResultsCount(info.count)
+//   updatePagination()
+//   hideLoader()
+// }
+
+
+
+ function renderCharacter(){
+  datos.forEach((character) => {
+          $("#cardtable").innerHTML += `
       <div class="character-img-container">
-        <img src="${character.image}" alt="" class="character-thumbnail" />
-      </div>
-      <div class="character-name-container">
         <h3 class="character-name">${character.name}</h3>
-        <p>${character.status} - ${character.species}</p>
       </div>
+
     `
-    $('.results').append(characterCard)
-  }
-}
+  });
+//   if (!characters || characters.length === 0) {
+//     $('.results').innerHTML =
+//       '<h2 class="no-results">No se han encontrado resultados</h2>'
+//     return
+//   }
 
-const updatePaginationCallback = (callback) => {
-  $('.first-page').onclick = () => {
-    currentPage = 1
-    callback()
-  }
+//   for (const character of characters) {
+//     if (tipo==character) {
+//       $("#cardtable").innerHTML = `
+//       <div class="character-img-container">
+//         <img src="${character.image}" alt="" class="character-thumbnail" />
+//       </div>
+//       <div class="character-name-container">
+//         <h3 class="character-name">${character.name}</h3>
+//         <p>${character.status} - ${character.species}</p>
+//         <p>${character.type} - ${character.location}</p>
+//         <p>En que episodio aparece${character.episode}</p>
+//       </div>
+//     `
+//     $('.results').append(characterCard)
+//   } else {
+//     $("#cardtable").innerHTML = `
+//     <div class="episode-name-container">
+//       <h3 class="episode-name">${episode.characters}</h3>
+//       <p>${episode.url}</p>
+//     </div>
+//   `}
+//   //$('.results').append(characterCard)
+// }
+ }
 
-  $('.previous-page').onclick = () => {
-    if (currentPage > 1) {
-      currentPage--
-      callback()
-    }
-  }
+// const updatePaginationCallback = (callback) => {
+//   $('.first-page').onclick = () => {
+//     currentPage = 1
+//     callback()
+//   }
 
-  $('.next-page').onclick = () => {
-    if (currentPage < totalPages) {
-      currentPage++
-      callback()
-    }
-  }
+//   $('.previous-page').onclick = () => {
+//     if (currentPage > 1) {
+//       currentPage--
+//       callback()
+//     }
+//   }
 
-  $('.last-page').onclick = () => {
-    currentPage = totalPages
-    callback()
-  }
-}
+//   $('.next-page').onclick = () => {
+//     if (currentPage < totalPages) {
+//       currentPage++
+//       callback()
+//     }
+//   }
 
-const updatePagination = () => {
-  $('.first-page').disabled = currentPage === 1
-  $('.previous-page').disabled = currentPage === 1
-  $('.next-page').disabled = currentPage === totalPages
-  $('.last-page').disabled = currentPage === totalPages
-}
+//   $('.last-page').onclick = () => {
+//     currentPage = totalPages
+//     callback()
+//   }
+// }
 
-const search = () => {
-  showLoader()
-  resetPage()
-  updateResultsTitle('Personajes encontrados')
-  fetchCharacters()
-}
+// const updatePagination = () => {
+//   $('.first-page').disabled = currentPage === 1
+//   $('.previous-page').disabled = currentPage === 1
+//   $('.next-page').disabled = currentPage === totalPages
+//   $('.last-page').disabled = currentPage === totalPages
+// }
+
+// const search = () => {
+//   showLoader()
+//   resetPage()
+//   //updateResultsTitle('Personajes encontrados')
+//   fetchCharacters()
+//   }
 
 const initialize = () => {
-  $('.search-button').onclick = () => {
-    search()
-    updatePaginationCallback(fetchCharacters)
-  }
+  getApiInfo()
+  // $('.search-button').onclick = () => {
+  //   search()
+  //   updatePaginationCallback(fetchCharacters)
+  // }
 
-  $('#search-type').style.display = 'none'
-  $('#search-sort').style.display = 'none'
+  // $('#search-type').style.display = 'none'
+  // $('#search-sort').style.display = 'none'
 
-  updatePaginationCallback(fetchCharacters)
-  search()
+  // updatePaginationCallback(fetchCharacters)
+  // search()
 }
 
 window.onload = initialize
