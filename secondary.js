@@ -25,8 +25,9 @@ async function getApiInfo() {
     const data = await response.json()
     loader.style.display = "none"
     datos =  data.results
-    totalPages = data.info.pages; 
-    // pageInfo.textContent = `Página ${currentPage} de ${totalPages}`
+    totalPages = data.info.count
+    
+    $(".results-number").textContent = `${totalPages}`
 
     console.log("loader is working");
     
