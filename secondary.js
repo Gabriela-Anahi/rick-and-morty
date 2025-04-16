@@ -11,6 +11,7 @@ let tipo = "character"
 let currentPage = 1
 let totalPages = 1
 let datos = []
+let page = 1
 let search =""
 let urlapi = `https://rickandmortyapi.com/api/${tipo}/?page=${currentPage}`
 
@@ -24,8 +25,11 @@ async function getApiInfo() {
     const data = await response.json()
     loader.style.display = "none"
     datos =  data.results
-    console.log(urlapi)
-    console.log(search)
+    totalPages = data.info.pages; 
+    // pageInfo.textContent = `Página ${currentPage} de ${totalPages}`
+
+    console.log("loader is working");
+    
     
   }catch (error) {
     console.log("Error en fetch:",error)
@@ -71,6 +75,38 @@ $(".search-button").onclick = function (e) {
   tipo= $("#search-type").value
   getApiInfo()
 }
+
+
+
+
+
+
+$(".previous-page").onclick = function (e) {
+  if (currentPage > 1) {
+      currentPage--
+      getApiInfo()
+  }
+};
+$(".next-page").onclick = function (e) {
+  if (currentPage < totalPages) {
+    currentPage++;
+  getApiInfo()
+}}
+
+
+$(".first-page").onclick = function (e) {
+  if (currentPage !== 1) {
+    currentPage = 1;
+  getApiInfo()
+}}
+
+$(".last-page").onclick = function (e) {
+  if(currentPage !== totalPages) {
+    currentPage = totalPages;
+  getApiInfo()
+  
+}}
+
 
 
 
