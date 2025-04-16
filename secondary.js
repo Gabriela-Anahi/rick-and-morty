@@ -8,7 +8,6 @@ const BASE_URL = 'https://rickandmortyapi.com/api'
 
 
 let tipo = "character"
-let searchinput= ""
 let currentPage = 1
 let totalPages = 1
 let datos = []
@@ -55,20 +54,17 @@ function renderCharacter(){
         $("#cardstable").innerHTML += `
         <div >
           <div class="character-name-container">
-            <h3 class="character-name">${episode.name}</h3>
+            <h3 class="character-name">${character.name}</h3>
           </div> 
         </div>
       `
       }
     })
 }
-$("#search-type").onchange = function (e) {
-  tipo = e.target.value
-}
-$("#search-input").onchange = function (e) {
-  search = e.target.value
-}
+
 $(".search-button").onclick = function (e) {
+  search= $("#search-input").value 
+  tipo= $("#search-type").value
   getApiInfo()
 }
 
@@ -81,6 +77,7 @@ $(".search-button").onclick = function (e) {
 
 
 const initializeApp = () => {
+
     getApiInfo()
 
   } 
