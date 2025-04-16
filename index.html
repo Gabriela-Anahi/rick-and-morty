@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Las aventuras de Ricardo y Mortimer</title>
-    <link rel="stylesheet" href="styles.css" />
+
     <!-- TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
    
@@ -19,7 +19,7 @@
     <div class="hero"></div>
     <main class="column">
       <div class="search">
-        <h2 id="search-title">Episodios</h2>
+        <h2 id="search-title" class="text-orange-600" >Episodios</h2>
         <div class="search-container">
           <form class="search-input-container">
             <input
@@ -47,8 +47,8 @@
             <span class="results-number">0</span> RESULTADOS
           </p>
           <div id="cardstable">
-            <div class="animate-pulse" id="loader" style="display:none;">
-              <p>Cargando...</p>
+            <div id="loader" style="display: none; text-align: center; margin: 20px;">
+              <span class="loader-text">Cargando personajes...</span>
             </div>
           </div>
           <div class="pagination">
