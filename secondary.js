@@ -6,7 +6,7 @@ const clearTable = (selector) => $(selector).innerHTML = ''
 const BASE_URL = 'https://rickandmortyapi.com/api'
 
 
-
+const loader = $("#loader");
 let tipo = "character"
 let currentPage = 1
 let totalPages = 1
@@ -17,16 +17,20 @@ let urlapi = `https://rickandmortyapi.com/api/${tipo}/?page=${currentPage}`
 //fetching
 async function getApiInfo() {
   try{
+    loader.style.display = "block"
     const searchData  = search ? `&name=${search}` : ""
     urlapi = `https://rickandmortyapi.com/api/${tipo}/?page=${currentPage}${searchData}`
     const response = await fetch(urlapi)
     const data = await response.json()
+    loader.style.display = "none"
     datos =  data.results
     console.log(urlapi)
     console.log(search)
     
   }catch (error) {
     console.log("Error en fetch:",error)
+    loader.style.display = "none"
+    loader.innerText = "Error al cargar datos."
   }
   renderCharacter()
 }

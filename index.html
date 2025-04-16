@@ -32,8 +32,8 @@
             <div class="sort-container">
               <label for="search-type">TIPO</label>
               <select name="search-type" id="search-type">
-                <option value="episode">EPISODIOS</option>
                 <option value="character">PERSONAJES</option>
+                <option value="episode">EPISODIOS</option>
               </select>
             </div>
             <button type="button" class="search-button">BUSCAR</button>
@@ -46,12 +46,11 @@
           <p class="results-count">
             <span class="results-number">0</span> RESULTADOS
           </p>
-          <div class="results" class="results"></div>
           <div id="cardstable">
-
-
+            <div class="animate-pulse" id="loader" style="display:none;">
+              <p>Cargando...</p>
+            </div>
           </div>
-          
           <div class="pagination">
             <button
               type="button"
