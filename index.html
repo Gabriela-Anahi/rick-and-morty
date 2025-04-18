@@ -52,8 +52,24 @@
                 <option value="character">PERSONAJES</option>
                 <option value="episode">EPISODIOS</option>
               </select>
-              <button type="button" class="search-button bg-lime-500 px-4 py-2 rounded hover:bg-lime-600">BUSCAR</button>
             </div>
+            <div class="sort-container-filters flex gap-2 items-center" style="display:block;">
+              <label for="search-gender"></label>
+              <select name="search-gender" id="search-gender" class="border border-black px-2 py-1 rounded" >
+                <option value="">ALL</option>
+                <option value="character">FEMENINO</option>
+                <option value="episode">MASCULINO</option>
+                <option value="unknown">DESCONOCIDO</option>
+              </select>
+              <label for="search-status"></label>
+              <select name="search-status" id="search-status" class="border border-black px-2 py-1 rounded" >
+                <option value="">ALL</option>
+                <option value="alive">VIVOS</option>
+                <option value="dead">MUERTOS</option>
+                <option value="unknown">DESCONOCIDO</option>
+              </select>
+            </div>
+            <button type="button" class="search-button bg-lime-500 px-4 py-2 rounded hover:bg-lime-600">BUSCAR</button>
           </form>
         </div>
       </section>
