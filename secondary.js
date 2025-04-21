@@ -44,15 +44,15 @@ async function getApiInfo() {
 
 
 
-
+// RENDER
 function renderCharacter(){
   clearTable("#cardstable")
     datos.forEach((character) => {
       
       if(tipo=="character"){
         $("#cardstable").innerHTML += `
-                <div >
-          <div class="character-img-container min-w-40 max-w-48 m-5" >
+                <div class="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
+          <div class="character-img-container "="relative h-56 m-2.5 overflow-hidden text-white rounded-md" >
             <img src="${character.image}" alt="" class="character-thumbnail items-center m-8"/>
           </div>
           <div class="character-name-container">
@@ -69,8 +69,8 @@ function renderCharacter(){
       `
       }
     })
-}
-
+  }
+// RENDER
 $(".search-button").onclick = function (e) {
   search= $("#search-input").value 
   tipo= $("#search-type").value

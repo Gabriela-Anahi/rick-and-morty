@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -6,80 +5,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Las aventuras de Ricardo y Mortimer</title>
 
-    <!-- TAILWIND -->
+    <!-- Google Font: Creepster -->
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-   
   </head>
-  <body>
-    <header>
+
+  <body class="bg-white text-black font-[Creepster]">
+    <!-- NAV -->
+    <nav class="flex items-center justify-between flex-wrap bg-lime-400 p-6">
+      <div class="flex items-center flex-shrink-0 mr-6">
+        <span class="text-2xl tracking-widest">Rick and Morty</span>
+      </div>
+      <div class="block lg:hidden">
+        <button class="flex items-center px-3 py-2 hover:text-green-800 hover:border-green-800">
+          <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <title>Rick y Morty</title>
+            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- HEADER -->
+    <header class="p-4">
       <div class="column logo-container">
-        <h1 class="logo">Rick y Morty</h1>
+        <h1 class="text-center text-4xl">Las aventuras de Ricardo y Mortimer</h1>
       </div>
     </header>
+
+    <!-- HERO (opcional) -->
     <div class="hero"></div>
-    <main class="column">
-      <div class="search">
-        <div class="search-container">
-          <form class="search-input-container">
+
+    <!-- MAIN CONTENT -->
+    <main class="p-4">
+      <!-- Search Section -->
+      <section class="search mb-8">
+        <div class="search-container max-w-xl mx-auto">
+          <form class="search-input-container flex flex-col gap-4 items-center">
             <input
               type="text"
               id="search-input"
-              class="search-input"
+              class="search-input rounded-lg border border-black px-4 py-2 w-full"
               placeholder="Ingresá tu búsqueda"
-              aria-labelledby="search-title"/>
-            <i class="fas fa-search" aria-hidden="true"></i>
-            <div class="sort-container">
-              <label for="search-type">TIPO</label>
-              <select name="search-type" id="search-type">
+              aria-labelledby="search-title"
+            />
+            <div class="sort-container flex gap-2 items-center">
+              <label for="search-type"></label>
+              <select name="search-type" id="search-type" class="border border-black px-2 py-1 rounded">
                 <option value="character">PERSONAJES</option>
                 <option value="episode">EPISODIOS</option>
               </select>
+              <button type="button" class="search-button bg-lime-500 px-4 py-2 rounded hover:bg-lime-600">BUSCAR</button>
             </div>
-            <button type="button" class="search-button">BUSCAR</button>
           </form>
         </div>
-      </div>
-      <div>
-        <section class="results-section">
-          <h2 class="results-title">Resultados</h2>
-          <p class="results-count">
-            <span class="results-number">0</span> RESULTADOS
-          </p>
-          <div id="cardstable">
-            <div id="loader" style="display: none; text-align: center; margin: 20px;">
-              <span class="loader-text">Cargando personajes...</span>
-            </div>
+      </section>
+
+      <!-- Results Section -->
+      <section class="results-section text-center">
+        <h2 class="results-title text-2xl mb-2">Resultados</h2>
+        <p class="results-count mb-4">
+          <span class="results-number">0</span> RESULTADOS
+        </p>
+
+        <div id="cardstable" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
+          <!-- Tarjetas dinámicas -->
+          <div id="loader" style="display: none; text-align: center; margin: 20px;">
+            <span class="loader-text">Cargando personajes...</span>
           </div>
-          <div class="pagination">
-            <button
-              type="button"
-              class="first-page pagination-button bg-orange-800"><<</button>
-            </button>
-            <button
-              type="button"
-              class="previous-page pagination-button">
-            <
-            </button>
-            <button
-              type="button"
-              class="next-page pagination-button">
-            >
-            </button>
-            <button
-              type="button"
-              class="last-page pagination-button"> 
-              >>
-            </button>
-          </div>
-        </section>
-        <div class="loader-container hidden">
-          <div class="loader"></div>
         </div>
-      </div>
+
+        <!-- Pagination -->
+        <div class="pagination flex justify-center gap-2 mt-6">
+          <button type="button" class="first-page pagination-button bg-orange-800 px-3 py-1 rounded text-white">«</button>
+          <button type="button" class="previous-page pagination-button px-3 py-1 rounded border border-black">‹</button>
+          <button type="button" class="next-page pagination-button px-3 py-1 rounded border border-black">›</button>
+          <button type="button" class="last-page pagination-button px-3 py-1 rounded border border-black">»</button>
+        </div>
+      </section>
     </main>
-    <footer>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-6 bg-gray-100 mt-8">
       <div class="column">Hecho con ❤️ por Gaby</div>
     </footer>
+
+    <!-- JS -->
     <script src="./secondary.js"></script>
   </body>
 </html>
+
+<div><li>
+name
+episode
+characters
+</li>
+</div>
