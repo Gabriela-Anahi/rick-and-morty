@@ -59,6 +59,23 @@ async function getCharacterId(id){
   getCharactersEpisodes(id)
 }
 
+<<<<<<< Updated upstream
+=======
+// async function getCharactersEpisodes(id) {
+//   try {
+//       const response = await fetch(`https://rickandmortyapi.com/api/episode/${id}`)
+//       const data = await response.json()
+//       const episodesLinks = data
+//       console.log(episodesLinks);
+      
+//       printCharactersEpisodes(episodesLinks)
+//   } catch (error) {
+//       console.error(error)
+//   }
+// }
+
+<<<<<<< HEAD
+>>>>>>> Stashed changes
 async function getEpisodeId(id){
   try {
       const response = await fetch(`https://rickandmortyapi.com/api/episode/${id}`)
@@ -73,12 +90,23 @@ async function getEpisodeId(id){
   //getCharacterComics(id)
 }
 
+=======
+
+
+// RENDER
+>>>>>>> 00e16d4 (fin)
 function renderCharacter(){
   clearTable("#cardstable")
     datos.forEach((character) => {
       
       if(tipo=="character"){
         $("#cardstable").innerHTML += `
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+          
+
+>>>>>>> Stashed changes
               <div class="character-img-container  group relative m-10 flex h-70
                w-60 rounded-xl shadow-xl ring-gray-900/5 sm:mx-auto sm:max-w-lg" onclick="getCharacterId(${character.id})"> 
           
@@ -92,6 +120,19 @@ function renderCharacter(){
                       <h3 class="character-name">${character.name}</h3>
                     </div>
                 </div>
+<<<<<<< Updated upstream
+=======
+
+=======
+                <div class="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
+          <div class="character-img-container "="relative h-56 m-2.5 overflow-hidden text-white rounded-md" >
+            <img src="${character.image}" alt="" class="character-thumbnail items-center m-8"/>
+          </div>
+          <div class="character-name-container">
+            <h3 class="character-name">${character.name}</h3>
+          </div> </div>
+>>>>>>> 00e16d4 (fin)
+>>>>>>> Stashed changes
         `
         console.log(character.id);      
       }else{
@@ -108,6 +149,7 @@ function renderCharacter(){
       `
       }
     })
+<<<<<<< HEAD
 }
 
   function printCharacterDescription (datos)  {
@@ -150,6 +192,10 @@ function renderCharacter(){
     }  
     }
 
+=======
+  }
+// RENDER
+>>>>>>> 00e16d4 (fin)
 $(".search-button").onclick = function (e) {
   search= $("#search-input").value 
   tipo= $("#search-type").value
