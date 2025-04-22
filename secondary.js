@@ -13,6 +13,8 @@ let totalPages = 1
 let datos = []
 let page = 1
 let search =""
+let gender = $("#search-gender").value
+let status = $("#search-status").value
 let urlapi = `https://rickandmortyapi.com/api/${tipo}/?page=${currentPage}`
 
 //fetching
@@ -26,12 +28,9 @@ async function getApiInfo() {
     loader.style.display = "none"
     datos =  data.results
     totalPages = data.info.count
-    
     $(".results-number").textContent = `${totalPages}`
-
     console.log("loader is working");
-    
-    
+        
   }catch (error) {
     console.log("Error en fetch:",error)
     loader.style.display = "none"
@@ -59,23 +58,125 @@ function renderCharacter(){
             <h3 class="character-name">${character.name}</h3>
           </div> </div>
         `
+        console.log(character.id);
+        
       }else{
         $("#cardstable").innerHTML += `
-        <div >
-          <div class="character-name-container">
-            <h3 class="character-name">${character.name}</h3>
-          </div> 
+        <div class="group m-10 flex h-50 w-40  px-50 rounded-md shadow-xl border  sm:mx-auto sm:max-w-lg" onclick="getEpisodeId(${character.id})">
+
+              <div class="z-10 h-full w-full rounded-md opacity-80 transition duration-300 ease-in-out group-hover:opacity-100 ">
+
+                  <div class="character-name-container  character-thumbnail  block h-full w-full scale-100 transform object-center opacity-100 transition duration-300 group-hover:scale-110">
+                      <h3 class="character-name">${character.name}</h3>
+                  </div> 
+              </div>
         </div>
       `
       }
     })
+}
+
+
+
+  function printCharacterDescription (datos)  {
+    clearTable("#cardstable")
+    if (!Array.isArray(datos)) {
+      datos = [datos];
+    }
+  
+    for (const dato of datos) {
+      let html = `
+        <div>
+          <img src="${dato.image}" alt=""/> 
+          <p><strong>Status:</strong> ${dato.status}</p>
+          <p><strong>Species:</strong> ${dato.species}</p>
+          <p><strong>Gender:</strong> ${dato.gender}</p>
+      `
+    }
   }
-// RENDER
+
+
+  function printEpisodeDescription (datos)  {
+    clearTable("#cardstable")
+    if (!Array.isArray(datos)) {
+      datos = [datos];
+    }
+  
+    for (const dato of datos) {
+
+      let htmlEpisodes = `
+        <div>
+        <p><strong>Name:</strong> ${dato.name}</p>
+        <p><strong>Episodes:</strong></p>
+          <ul class="list-disc ml-5">
+      `
+  
+      dato.characters.forEach(url => {
+        const characterNumber = url.split("/").pop()
+        htmlEpisodes += `<li>Personaje ${characterNumber} - <a href="${url}"  class="episode-link text-blue-500 underline">Ver personaje</a></li>`
+      })
+  
+      htmlEpisodes += `</ul></div>`
+  
+      $("#cardstable").innerHTML += htmlEpisodes;
+    }
+      
+    }
+
 $(".search-button").onclick = function (e) {
   search= $("#search-input").value 
   tipo= $("#search-type").value
   getApiInfo()
 }
+
+
+
+// function printCharactersEpisodes (episodesLinks)  {
+//   if(episodesLinks.length===0){
+//     $(".mainTable").innerHTML += `<p class="font-bold">No results</p>`
+//   }else{
+//   for (const dato of episodesLinks) {
+
+//     let htmlEpisodes = `
+//         <ul class="list-disc ml-5">
+//     `
+
+//     dato.characters.forEach(url => {
+//       const characterNumber = url.split("/").pop()
+//       htmlEpisodes += `<li>Personaje ${characterNumber} - <a href="${url}"  class="episode-link text-blue-500 underline">Ver personaje</a></li>`
+//     })
+
+//     htmlEpisodes += `</ul></div>`
+
+//     $("#cardstable").innerHTML += htmlEpisodes;
+//   }
+    
+//   }
+// }
+
+
+
+$("#search-type").onchange = function () { 
+  tipo = $("#search-type").value;
+  if (tipo === "episode") {
+    console.log("episode");
+    
+    $("#search-gender").disabled = true;
+    $("#search-status").disabled = true;
+
+  } else {
+    $("#search-gender").disabled = false;
+    $("#search-status").disabled = false;
+  }
+}
+  
+
+$(".search-button").onclick = function (e) {
+search= $("#search-input").value 
+tipo= $("#search-type").value
+getApiInfo()
+}
+
 
 
 
@@ -121,6 +222,28 @@ const initializeApp = () => {
 
     getApiInfo()
 
+
   } 
   
   window.addEventListener("load", initializeApp)
+  $("#cardstable").addEventListener("click", async (e) => {
+    const target = e.target;
+  
+    if (target.tagName === "A" && target.classList.contains("episode-link")) {
+      e.preventDefault();
+      const id = target.href.split("/").pop();
+  
+      const res = await fetch(`https://rickandmortyapi.com/api/episode/${id}`);
+      const data = await res.json();
+      printEpisodeDescription(data);
+    }
+  
+    if (target.tagName === "A" && target.classList.contains("character-link")) {
+      e.preventDefault();
+      const id = target.href.split("/").pop();
+  
+      const res = await fetch(`https://rickandmortyapi.com/api/character/${id}`);
+      const data = await res.json();
+      printCharacterDescription(data);
+    }
+  })
