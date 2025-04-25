@@ -44,24 +44,74 @@ const filters = `${searchInput}${status ? `&status=${status}` : ""}${gender ? `&
   renderCharacter()
 }
 
+async function getCharacterId(id){
+  try {
+    //loader.style.display = "block"
+      const response = await fetch(`https://rickandmortyapi.com/api/character/${id}`)
+      const data = await response.json()
+      datos = data
+      console.log(data.id);
+      
+      
+      //loader.style.display = "none"
+  } catch (error) {
+    console.log("Error en fetch:",error)
+    //loader.style.display = "none"
+    //loader.innerText = "Error al cargar datos."
+  }
+  printCharacterDescription(datos);
+  getCharactersEpisodes(id)
+}
 
+// async function getCharactersEpisodes(id) {
+//   try {
+//       const response = await fetch(`https://rickandmortyapi.com/api/episode/${id}`)
+//       const data = await response.json()
+//       const episodesLinks = data
+//       console.log(episodesLinks);
+      
+//       printCharactersEpisodes(episodesLinks)
+//   } catch (error) {
+//       console.error(error)
+//   }
+// }
 
+async function getEpisodeId(id){
+  try {
+      const response = await fetch(`https://rickandmortyapi.com/api/episode/${id}`)
+      const data = await response.json()
+    datos = data
+      console.log("episodios",data)
+      
+  } catch (error) {
+      console.log(error);
+  }
+  printEpisodeDescription(datos)
+  //getCharacterComics(id)
+}
 
-
-// RENDER
 function renderCharacter(){
   clearTable("#cardstable")
     datos.forEach((character) => {
       
       if(tipo=="character"){
         $("#cardstable").innerHTML += `
-                <div class="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
-          <div class="character-img-container "="relative h-56 m-2.5 overflow-hidden text-white rounded-md" >
-            <img src="${character.image}" alt="" class="character-thumbnail items-center m-8"/>
-          </div>
-          <div class="character-name-container">
-            <h3 class="character-name">${character.name}</h3>
-          </div> </div>
+          
+
+              <div class="character-img-container  group relative m-10 flex h-70
+               w-60 rounded-xl shadow-xl ring-gray-900/5 sm:mx-auto sm:max-w-lg" onclick="getCharacterId(${character.id})"> 
+          
+                  <div class="z-10 h-full w-full overflow-hidden rounded-xl border border-gray-200 opacity-80 transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 dark:opacity-70">
+
+                      <img src="${character.image}" alt="" class="character-thumbnail animate-fade-in block h-full w-full scale-100 transform object-cover object-center opacity-100 transition duration-300 group-hover:scale-110"/> 
+                      </div>
+                      
+                      <div class="character-name-container absolute p-20 bottom-0 z-20 m-0 pb-4 ps-4 transition duration-300 ease-in-out group-hover:-translate-y-1 group-hover:translate-x-3 group-hover:scale-110">
+
+                      <h3 class="character-name">${character.name}</h3>
+                    </div>
+                </div>
+
         `
         console.log(character.id);
         
