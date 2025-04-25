@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -6,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Las aventuras de Ricardo y Mortimer</title>
 
-    <!-- TAILWIND -->
+    <!-- Google Font: Creepster -->
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-   
   </head>
+
   <body class="bg-white text-black font-[Creepster]">
     <!-- NAV -->
     <nav class="flex items-center justify-between flex-wrap bg-lime-400 p-6">
@@ -30,8 +32,12 @@
     <header class="p-4">
       <div class="column logo-container">
         <h1 class="text-center text-4xl">Las aventuras de Ricardo y Mortimer</h1>
+        <h1 class="text-center text-4xl">Las aventuras de Ricardo y Mortimer</h1>
       </div>
     </header>
+
+    <!-- HERO (opcional) -->
+    <div class="hero"></div>
 
     <!-- MAIN CONTENT -->
     <main class="p-4">
@@ -43,7 +49,13 @@
               type="text"
               id="search-input"
               class="search-input rounded-lg border border-black px-4 py-2 w-full"
+              class="search-input rounded-lg border border-black px-4 py-2 w-full"
               placeholder="Ingresá tu búsqueda"
+              aria-labelledby="search-title"
+            />
+            <div class="sort-container flex gap-2 items-center">
+              <label for="search-type"></label>
+              <select name="search-type" id="search-type" class="border border-black px-2 py-1 rounded">
               aria-labelledby="search-title"
             />
             <div class="sort-container flex gap-2 items-center">
@@ -52,7 +64,9 @@
                 <option value="character">PERSONAJES</option>
                 <option value="episode">EPISODIOS</option>
               </select>
+              <button type="button" class="search-button bg-lime-500 px-4 py-2 rounded hover:bg-lime-600">BUSCAR</button>
             </div>
+<<<<<<< HEAD
               <div class="sort-container-filters flex gap-2 items-center" style="display:block;">
                 <label for="search-gender"></label>
                 <select name="search-gender" id="search-gender" class="border border-black px-2 py-1 rounded" >
@@ -70,6 +84,8 @@
                 </select>
             </div>
             <button type="button" class="search-button bg-lime-500 px-4 py-2 rounded hover:bg-lime-600">BUSCAR</button>
+=======
+>>>>>>> 973681bdbace27b1921fa761ff088a5c1085b3d7
           </form>
         </div>
       </section>
@@ -81,7 +97,7 @@
           <span class="results-number">0</span> RESULTADOS
         </p>
 
-        <div id="cardstable" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 justify-items-center">
+        <div id="cardstable" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
           <!-- Tarjetas dinámicas -->
           <div id="loader" style="display: none; text-align: center; margin: 20px;">
             <span class="loader-text">Cargando personajes...</span>
@@ -96,7 +112,11 @@
           <button type="button" class="last-page pagination-button px-3 py-1 rounded border border-black">»</button>
         </div>
       </section>
+      </section>
     </main>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-6 bg-gray-100 mt-8">
 
     <!-- FOOTER -->
     <footer class="text-center py-6 bg-gray-100 mt-8">
@@ -107,3 +127,10 @@
     <script src="./secondary.js"></script>
   </body>
 </html>
+
+<div><li>
+name
+episode
+characters
+</li>
+</div>
