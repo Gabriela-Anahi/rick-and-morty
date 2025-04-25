@@ -13,16 +13,21 @@ let totalPages = 1
 let datos = []
 let page = 1
 let search =""
-let gender = $("#search-gender").value
-let status = $("#search-status").value
 let urlapi = `https://rickandmortyapi.com/api/${tipo}/?page=${currentPage}`
 
 //fetching
 async function getApiInfo() {
   try{
     loader.style.display = "block"
-    const searchData  = search ? `&name=${search}` : ""
-    urlapi = `https://rickandmortyapi.com/api/${tipo}/?page=${currentPage}${searchData}`
+
+//     const searchData  = search ? `&name=${search}` : ""
+// const filters = `${searchInput}${status ? `&status=${status}` : ""}${gender ? `&gender=${gender}` : ""}`
+const gender = $("#search-gender").value
+const status = $("#search-status").value
+const searchInput = search ? `&name=${search}` : ""
+const filters = `${searchInput}${status ? `&status=${status}` : ""}${gender ? `&gender=${gender}` : ""}`
+
+    urlapi = `https://rickandmortyapi.com/api/${tipo}/?page=${currentPage}${filters}`
     const response = await fetch(urlapi)
     const data = await response.json()
     loader.style.display = "none"
@@ -206,6 +211,38 @@ $(".search-button").onclick = function (e) {
 
 
 
+
+// document.getElementById('buscar').addEventListener('click', () => {
+  
+//   const contenedorResultados = document.getElementById('resultados');
+
+//   if (personajesFiltrados.length === 0) {
+//     contenedorResultados.innerHTML = '<p>No se encontraron personajes.</p>';
+//   } else {
+//     contenedorResultados.innerHTML = personajesFiltrados.map(personaje => `
+//       <div>
+//         <h3>${personaje.name}</h3>
+//         <p>Género: ${personaje.gender}</p>
+//         <p>Estado: ${personaje.status}</p>
+//       </div>
+//     `).join('');
+//   }
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 $("#search-type").onchange = function () { 
   tipo = $("#search-type").value;
   if (tipo === "episode") {
@@ -221,9 +258,16 @@ $("#search-type").onchange = function () {
 }
   
 
+
+
 $(".search-button").onclick = function (e) {
 search= $("#search-input").value 
 tipo= $("#search-type").value
+const gender = $("#search-status").value;
+  const status = $("#search-status").value;
+
+  const personajesFiltrados = filtrarPersonajes(generoSeleccionado, estadoSeleccionado);
+
 getApiInfo()
 }
 
