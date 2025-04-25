@@ -42,25 +42,40 @@ async function getApiInfo() {
 
 async function getCharacterId(id){
   try {
+<<<<<<< HEAD
       loader.style.display = "block"
+=======
+    //loader.style.display = "block"
+>>>>>>> 80ce4dc (fixing gaby's mess)
       const response = await fetch(`https://rickandmortyapi.com/api/character/${id}`)
       const data = await response.json()
       datos = data
       console.log(data.id);
       
       
+<<<<<<< HEAD
       loader.style.display = "none"
   } catch (error) {
       console.log("Error en fetch:",error)
       loader.style.display = "none"
       loader.innerText = "Error al cargar datos."
+=======
+      //loader.style.display = "none"
+  } catch (error) {
+    console.log("Error en fetch:",error)
+    //loader.style.display = "none"
+    //loader.innerText = "Error al cargar datos."
+>>>>>>> 80ce4dc (fixing gaby's mess)
   }
   printCharacterDescription(datos);
   getCharactersEpisodes(id)
 }
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> 80ce4dc (fixing gaby's mess)
 // async function getCharactersEpisodes(id) {
 //   try {
 //       const response = await fetch(`https://rickandmortyapi.com/api/episode/${id}`)
@@ -75,7 +90,10 @@ async function getCharacterId(id){
 // }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> 80ce4dc (fixing gaby's mess)
 async function getEpisodeId(id){
   try {
       const response = await fetch(`https://rickandmortyapi.com/api/episode/${id}`)
@@ -89,24 +107,33 @@ async function getEpisodeId(id){
   printEpisodeDescription(datos)
   //getCharacterComics(id)
 }
+<<<<<<< HEAD
 
 =======
 
 
 // RENDER
 >>>>>>> 00e16d4 (fin)
+=======
+
+>>>>>>> 80ce4dc (fixing gaby's mess)
 function renderCharacter(){
   clearTable("#cardstable")
     datos.forEach((character) => {
       
       if(tipo=="character"){
         $("#cardstable").innerHTML += `
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 <<<<<<< HEAD
           
 
 >>>>>>> Stashed changes
+=======
+          
+
+>>>>>>> 80ce4dc (fixing gaby's mess)
               <div class="character-img-container  group relative m-10 flex h-70
                w-60 rounded-xl shadow-xl ring-gray-900/5 sm:mx-auto sm:max-w-lg" onclick="getCharacterId(${character.id})"> 
           
@@ -120,6 +147,7 @@ function renderCharacter(){
                       <h3 class="character-name">${character.name}</h3>
                     </div>
                 </div>
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 
@@ -133,6 +161,9 @@ function renderCharacter(){
           </div> </div>
 >>>>>>> 00e16d4 (fin)
 >>>>>>> Stashed changes
+=======
+
+>>>>>>> 80ce4dc (fixing gaby's mess)
         `
         console.log(character.id);      
       }else{
