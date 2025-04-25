@@ -5,6 +5,7 @@ const clearTable = (selector) => $(selector).innerHTML = ''
 
 const BASE_URL = 'https://rickandmortyapi.com/api'
 
+
 const loader = $("#loader");
 let tipo = "character"
 let currentPage = 1
@@ -18,20 +19,19 @@ let urlapi = `https://rickandmortyapi.com/api/${tipo}/?page=${currentPage}`
 async function getApiInfo() {
   try{
     loader.style.display = "block"
-    const gender = $("#search-gender").value
-    const status = $("#search-status").value
-    const searchInput = search ? `&name=${search}` : ""
-    const filters = `${searchInput}${status ? `&status=${status}` : ""}${gender ? `&gender=${gender}` : ""}`
-
-    urlapi = `https://rickandmortyapi.com/api/${tipo}/?page=${currentPage}${filters}`
+    const searchData  = search ? `&name=${search}` : ""
+    urlapi = `https://rickandmortyapi.com/api/${tipo}/?page=${currentPage}${searchData}`
     const response = await fetch(urlapi)
     const data = await response.json()
     loader.style.display = "none"
     datos =  data.results
     totalPages = data.info.count
+    
     $(".results-number").textContent = `${totalPages}`
+
     console.log("loader is working");
-        
+    
+    
   }catch (error) {
     console.log("Error en fetch:",error)
     loader.style.display = "none"
@@ -40,22 +40,30 @@ async function getApiInfo() {
   renderCharacter()
 }
 
+
 async function getCharacterId(id){
   try {
-      loader.style.display = "block"
+    //loader.style.display = "block"
       const response = await fetch(`https://rickandmortyapi.com/api/character/${id}`)
       const data = await response.json()
       datos = data
       console.log(data.id);
-      loader.style.display = "none"
+      
+      
+      //loader.style.display = "none"
   } catch (error) {
     console.log("Error en fetch:",error)
-    loader.style.display = "none"
-    loader.innerText = "Error al cargar datos."
+    //loader.style.display = "none"
+    //loader.innerText = "Error al cargar datos."
   }
   printCharacterDescription(datos);
-  getCharactersEpisodes(id)
+  // getComicCharacters(id)
 }
+
+
+
+
+
 async function getEpisodeId(id){
   try {
       const response = await fetch(`https://rickandmortyapi.com/api/episode/${id}`)
@@ -67,7 +75,10 @@ async function getEpisodeId(id){
       console.log(error);
   }
   printEpisodeDescription(datos)
+  //getCharacterComics(id)
 }
+
+
 
 function renderCharacter(){
   clearTable("#cardstable")
@@ -75,6 +86,8 @@ function renderCharacter(){
       
       if(tipo=="character"){
         $("#cardstable").innerHTML += `
+          
+
               <div class="character-img-container  group relative m-10 flex h-70
                w-60 rounded-xl shadow-xl ring-gray-900/5 sm:mx-auto sm:max-w-lg" onclick="getCharacterId(${character.id})"> 
           
@@ -88,8 +101,10 @@ function renderCharacter(){
                       <h3 class="character-name">${character.name}</h3>
                     </div>
                 </div>
+
         `
-        console.log(character.id);      
+        console.log(character.id);
+        
       }else{
         $("#cardstable").innerHTML += `
         <div class="group m-10 flex h-50 w-40  px-50 rounded-md shadow-xl border  sm:mx-auto sm:max-w-lg" onclick="getEpisodeId(${character.id})">
@@ -106,6 +121,8 @@ function renderCharacter(){
     })
 }
 
+
+
   function printCharacterDescription (datos)  {
     clearTable("#cardstable")
     if (!Array.isArray(datos)) {
@@ -119,22 +136,37 @@ function renderCharacter(){
           <p><strong>Status:</strong> ${dato.status}</p>
           <p><strong>Species:</strong> ${dato.species}</p>
           <p><strong>Gender:</strong> ${dato.gender}</p>
-      `
+          <h4>Episodes:</h4>
+          <ul class="list-disc ml-5">
+      `;
+  
+      dato.episode.forEach(url => {
+        const episodeNumber = url.split("/").pop(); // Agarro el número al final del link
+        html += `<li>Episode ${episodeNumber} - <a href="${url}"  class="character-link text-blue-500 underline">Ver episodio</a></li>`;
+      });
+  
+      html += `</ul></div>`;
+  
+      $("#cardstable").innerHTML += html;
     }
   }
+
 
   function printEpisodeDescription (datos)  {
     clearTable("#cardstable")
     if (!Array.isArray(datos)) {
       datos = [datos];
     }
+  
     for (const dato of datos) {
+
       let htmlEpisodes = `
         <div>
         <p><strong>Name:</strong> ${dato.name}</p>
         <p><strong>Episodes:</strong></p>
           <ul class="list-disc ml-5">
       `
+  
       dato.characters.forEach(url => {
         const characterNumber = url.split("/").pop()
         htmlEpisodes += `<li>Personaje ${characterNumber} - <a href="${url}"  class="episode-link text-blue-500 underline">Ver personaje</a></li>`
@@ -143,7 +175,8 @@ function renderCharacter(){
       htmlEpisodes += `</ul></div>`
   
       $("#cardstable").innerHTML += htmlEpisodes;
-    }  
+    }
+      
     }
 
 $(".search-button").onclick = function (e) {
@@ -152,42 +185,18 @@ $(".search-button").onclick = function (e) {
   getApiInfo()
 }
 
-$("#search-type").onchange = function () { 
-  tipo = $("#search-type").value;
-  if (tipo === "episode") {
-    console.log("episode");
-    
-    $("#search-gender").disabled = true;
-    $("#search-status").disabled = true;
-
-  } else {
-    $("#search-gender").disabled = false;
-    $("#search-status").disabled = false;
-  }
-}
-  
-$(".search-button").onclick = function (e) {
-  search= $("#search-input").value 
-  tipo= $("#search-type").value
-  const gender = $("#search-status").value;
-  const status = $("#search-status").value;
-  const personajesFiltrados = filtrarPersonajes(generoSeleccionado,estadoSeleccionado);
-  getApiInfo()
-}
-
 $(".previous-page").onclick = function (e) {
   if (currentPage > 1) {
       currentPage--
       getApiInfo()
   }
-}
-
+};
 $(".next-page").onclick = function (e) {
   if (currentPage < totalPages) {
     currentPage++;
-    getApiInfo()
-  }
-}
+  getApiInfo()
+}}
+
 
 $(".first-page").onclick = function (e) {
   if (currentPage !== 1) {
@@ -203,7 +212,11 @@ $(".last-page").onclick = function (e) {
 }}
 
 const initializeApp = () => {
+
     getApiInfo()
+
+
   } 
-window.addEventListener("load", initializeApp)
- 
+  
+  window.addEventListener("load", initializeApp)
+
